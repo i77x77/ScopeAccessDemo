@@ -6,11 +6,11 @@ interface Permission {
 }
 
 interface PermissionsState {
-  data: Permission[];
+  data: Permission[] | null;
 }
 
 const initialState: PermissionsState = {
-  data: [],
+  data: null,
 };
 
 export const permissionsSlice = createSlice({
@@ -21,11 +21,10 @@ export const permissionsSlice = createSlice({
       state.data = action.payload;
     },
     clearPermissions: (state) => {
-      state.data = [];
+      state.data = null;
     },
   },
 });
 
 export const { setPermissions, clearPermissions } = permissionsSlice.actions;
-
 export default permissionsSlice.reducer;

@@ -2,31 +2,22 @@
 
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
+import { hasPermission } from "../utils";
 
 function MainPage() {
   const permissions = useSelector((state: RootState) => state.permissions.data);
-  console.log("Permissions from store:", permissions);
-  if (
-    !permissions.some(
-      (perm) => perm.resource === "documents" && perm.scopes.includes("read"),
-    )
-  ) {
-    return (
-      <div className="p-6 font-sans bg-gray-50 min-h-screen">
-        <h1 className="text-2xl font-bold mb-4">
-          У вас нет доступа к документам
-        </h1>
-      </div>
-    );
+  if (!hasPermission(permissions, "documents", "read")) {
+    return <div>У вас нет доступа</div>;
   }
+
   return (
     <div className="p-6 font-sans bg-gray-50 min-h-screen">
       <h1 className="text-2xl font-bold mb-4">Документы</h1>
-
-      <button className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-        Добавить документ
-      </button>
-
+      {hasPermission(permissions, "documents", "write") && (
+        <button className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+          Добавить документ
+        </button>
+      )}
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-200 shadow-sm rounded">
           <thead className="bg-gray-100">
@@ -43,12 +34,16 @@ function MainPage() {
               <td className="px-4 py-2 border-b">Документ 1</td>
               <td className="px-4 py-2 border-b">2026-04-03</td>
               <td className="px-4 py-2 border-b space-x-2">
-                <button className="px-2 py-1 bg-yellow-400 text-white rounded hover:bg-yellow-500">
-                  Редактировать
-                </button>
-                <button className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600">
-                  Удалить
-                </button>
+                {hasPermission(permissions, "documents", "write") && (
+                  <button className="px-2 py-1 bg-yellow-400 text-white rounded hover:bg-yellow-500">
+                    Редактировать
+                  </button>
+                )}
+                {hasPermission(permissions, "documents", "delete") && (
+                  <button className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600">
+                    Удалить
+                  </button>
+                )}
               </td>
             </tr>
             <tr className="hover:bg-gray-50">
@@ -59,9 +54,12 @@ function MainPage() {
                 <button className="px-2 py-1 bg-yellow-400 text-white rounded hover:bg-yellow-500">
                   Редактировать
                 </button>
-                <button className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600">
-                  Удалить
-                </button>
+
+                {hasPermission(permissions, "documents", "delete") && (
+                  <button className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600">
+                    Удалить
+                  </button>
+                )}
               </td>
             </tr>
           </tbody>
