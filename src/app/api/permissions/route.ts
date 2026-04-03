@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   const permissions = [
-    { resource: "documents", scopes: ["write"] },
+    { resource: "documents", scopes: ["read", "write"] },
     { resource: "contacts", scopes: ["read", "write"] },
   ];
 
