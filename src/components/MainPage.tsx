@@ -1,19 +1,17 @@
 "use client";
 
-import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
-import { hasPermission } from "../utils";
+import { usePermissions } from "../hooks";
 
 function MainPage() {
-  const permissions = useSelector((state: RootState) => state.permissions.data);
-  if (!hasPermission(permissions, "documents", "read")) {
+  const { hasPermission } = usePermissions();
+  if (!hasPermission("documents", "read")) {
     return <div>У вас нет доступа</div>;
   }
 
   return (
     <div className="p-6 font-sans bg-gray-50 min-h-screen">
       <h1 className="text-2xl font-bold mb-4">Документы</h1>
-      {hasPermission(permissions, "documents", "write") && (
+      {hasPermission("documents", "write") && (
         <button className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
           Добавить документ
         </button>
@@ -34,12 +32,12 @@ function MainPage() {
               <td className="px-4 py-2 border-b">Документ 1</td>
               <td className="px-4 py-2 border-b">2026-04-03</td>
               <td className="px-4 py-2 border-b space-x-2">
-                {hasPermission(permissions, "documents", "write") && (
+                {hasPermission("documents", "write") && (
                   <button className="px-2 py-1 bg-yellow-400 text-white rounded hover:bg-yellow-500">
                     Редактировать
                   </button>
                 )}
-                {hasPermission(permissions, "documents", "delete") && (
+                {hasPermission("documents", "delete") && (
                   <button className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600">
                     Удалить
                   </button>
@@ -55,7 +53,7 @@ function MainPage() {
                   Редактировать
                 </button>
 
-                {hasPermission(permissions, "documents", "delete") && (
+                {hasPermission("documents", "delete") && (
                   <button className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600">
                     Удалить
                   </button>
