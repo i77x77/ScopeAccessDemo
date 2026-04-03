@@ -49,9 +49,11 @@ function MainPage() {
               <td className="px-4 py-2 border-b">Документ 2</td>
               <td className="px-4 py-2 border-b">2026-04-02</td>
               <td className="px-4 py-2 border-b space-x-2">
-                <button className="px-2 py-1 bg-yellow-400 text-white rounded hover:bg-yellow-500">
-                  Редактировать
-                </button>
+                {hasPermission("documents", "write") && (
+                  <button className="px-2 py-1 bg-yellow-400 text-white rounded hover:bg-yellow-500">
+                    Редактировать
+                  </button>
+                )}
 
                 {hasPermission("documents", "delete") && (
                   <button className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600">
