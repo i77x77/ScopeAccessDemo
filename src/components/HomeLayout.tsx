@@ -10,7 +10,7 @@ const HomeLayout = ({ children }: { children: ReactNode }) => {
   const permissions = useSelector((state: RootState) => state.permissions.data);
 
   useEffect(() => {
-    if (permissions !== null) return; // уже загружено
+    if (permissions !== null) return;
 
     async function fetchPermissions() {
       const res = await fetch("/api/permissions");
