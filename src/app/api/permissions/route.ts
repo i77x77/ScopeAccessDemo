@@ -69,7 +69,6 @@ export async function POST(request: NextRequest) {
       }));
     }
 
-    // Возвращаем массив напрямую, без обёртки
     return NextResponse.json(permissions);
   } catch (error) {
     console.error("Failed to fetch permissions:", error);
