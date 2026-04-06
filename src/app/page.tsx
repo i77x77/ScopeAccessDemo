@@ -1,8 +1,7 @@
 import MainPage from "../components/MainPage";
 import { PermissionsArray } from "../types";
-
 export default async function Home() {
-  const response = await fetch("http://localhost:3000/api/permissions", {
+  const response = await fetch(`${process.env.KEYCLOAK_URL}/api/permissions`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -10,6 +9,7 @@ export default async function Home() {
     body: JSON.stringify({
       resources: ["admin-user", "company"],
     }),
+    next: { revalidate: 0 },
   });
 
   const data: PermissionsArray = await response.json();
